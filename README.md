@@ -147,7 +147,7 @@ The code below defines a simple example of the use of the SWIFT model, based on 
 	ylabel=expression(paste(delta,"2H"['X']*" [","\211",", vsmow]"))	
 		# Provide a y-axis label
 
-	plot(t/tF,StemBase, xlim= c( min(tstud)/tF, max(tstud)/tF ), type='l', lty=2,
+	plot(t,StemBase, xlim= c( min(tstud)/tF, max(tstud)/tF ), type='l', lty=2,
 	 	 col='grey', ylab=ylabel, xlab='timesteps')	
 		# Plot the signature fluctuations at the stem base
 	
