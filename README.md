@@ -33,9 +33,17 @@ An in depth description of the formula used within the SWIFT model can be found 
 
 ## Installation
 
-Simply download and enjoy.
+Use the **devtools** package to install the current development version from R.
+	# PACKAGE DEVTOOLS REQUIRED
+	#--------------------------
+	require(devtools)
+	library('devtools')
 
-
+	# INSTALL PACKAGE FROM GITHUB REPOSITORY
+	#---------------------------------------
+	install_github("HannesDeDeurwaerder/SWIFT")
+	
+	
 ### Dependencies
 
 SWIFT has no other dependencies other than the base R installation.
