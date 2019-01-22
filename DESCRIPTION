@@ -1,0 +1,19 @@
+Package: 	SWIFT
+Type: 		Package
+Title: 		Tracking stable water isotopic fluctuation along the length of a plant
+Version: 	0.1.0
+Date: 		2019-01-21
+Author: 	Hannes De Deurwaerder, Marco D. Visser, Matteo Detto, Pascal Boeckx, 
+		      Felicien Meunier and Hans Verbeeck.
+Maintainer: 	Hannes De Deurwaerder <hannes_de_deurwaerder@hotmail.com>
+Description: 	Multiple functions for tracking stable water isotopic fluctuations
+              and variance along the lenght of a plant using the SWIFT model. 
+              Function 'SWIFT_SB' and 'SWIFT_H' can respectively be used to 
+              calculate the isotopic signature over time at the stem base of the
+              plant, or at a by the user defined height and time. Additional 
+              functions are 'SoilRootCond', 'PSI0calc' and 'Bprep' which in this 
+              order help the user to define (i) the soil to root conductivity 
+              for every defined soil layer, (ii) the water potential at stem 
+              base for every timestep, and (iii) the root length distribution 
+              for every defined soil layer.
+License: 	GPL (>= 2)
