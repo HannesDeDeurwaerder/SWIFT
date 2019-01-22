@@ -34,6 +34,9 @@ An in depth description of the formula used within the SWIFT model can be found 
 ## Installation
 
 Use the **devtools** package to install the current development version from R.
+
+### Install from Github repository
+
 	# PACKAGE DEVTOOLS REQUIRED
 	#--------------------------
 	require(devtools)
