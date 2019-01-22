@@ -24,7 +24,8 @@ root length distribution for every defined soil layer.
 \author{	
 \packageAuthor{SWIFT}
 Maintainer: 
-\packageMaintainer{SWIFT}}
+\packageMaintainer{SWIFT}
+}
 \references{
 De Deurwaerder et al (IN REVIEW)
 }

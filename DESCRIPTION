@@ -8,7 +8,7 @@ Author: 	Hannes De Deurwaerder, Marco D. Visser, Matteo Detto, Pascal Boeckx,
 Maintainer: 	Hannes De Deurwaerder <hannes_de_deurwaerder@hotmail.com>
 Description: 	Multiple functions for tracking stable water isotopic fluctuations
               and variance along the lenght of a plant using the SWIFT model. 
-              Function 'SWIFT_SB' and 'SWIFT_H' can respectively be used to 
+              Function SWIFT_SB and SWIFT_H can respectively be used to 
               calculate the isotopic signature over time at the stem base of the
               plant, or at a by the user defined height and time. Additional 
               functions are 'SoilRootCond', 'PSI0calc' and 'Bprep' which in this 
