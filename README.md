@@ -83,7 +83,7 @@ The code below defines a simple example of the use of the SWIFT model, based on 
 
 		
 	# SOURCE THE SWIFT MODEL
-    #-----------------------
+        #-----------------------
   	require(SWIFT)
 
 
@@ -92,8 +92,8 @@ The code below defines a simple example of the use of the SWIFT model, based on 
 		# a. Diurnal sapflow pattern
 		
 			data(SFday) 	# SF for one day, time frequency: every min, expressed in
-							# [kg h-1]. This data is derived from Huang et al, 2017
-     		uch <- 60*60   	# unit conversion: h to sec
+					# [kg h-1]. This data is derived from Huang et al, 2017
+     			uch <- 60*60   	# unit conversion: h to sec
 			SF  <- c( rep(SFday,n) )/(uch)		# repetition of SF day over n prefered days
 
 		# b. Soil water potential curve with depth, from Meissner et al, 2012
