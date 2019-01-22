@@ -1,6 +1,7 @@
 Package: 	SWIFT
 Type: 		Package
-Title: 		Tracking stable water isotopic fluctuation along the length of a plant
+Title: 		SWIFT: Tracking stable water isotopic fluctuation along the length of 
+          a plant
 Version: 	0.1.0
 Date: 		2019-01-21
 Author: 	Hannes De Deurwaerder, Marco D. Visser, Matteo Detto, Pascal Boeckx, 

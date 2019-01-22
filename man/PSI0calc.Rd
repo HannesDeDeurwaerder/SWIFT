@@ -1,7 +1,7 @@
 \name{PSI0calc}
 \alias{PSI0calc}
 \title{
-Function to calculate water potential at the stem base of a plant through time}
+Calculate the water potential at the stem base of a plant through time}
 \description{
 This function constructs a vector of water potentials at stem base for every 
 timestep [in m H2O]}
@@ -9,38 +9,38 @@ timestep [in m H2O]}
 r = NULL, rho = NULL, t = NULL, Z = NULL)}
 \arguments{
   \item{As}{
-  Description: The soil surface area covering the roots [in m2] 
-		Structure: One value, representative of the studied plant}
+  Description: The soil surface area covering the roots [in m2];  
+	Structure: One value, representative of the studied plant}
   \item{B}{
   Description: Root length density at every discrete soil layer - Results from 
-  the function Bprep - [in m m-3]
+  the function Bprep - [in m m-3]; 
 	Structure: A discrete vector of n elements, with n the number of soil layers} 
   \item{dZ}{
-  Description: Thickness of the soil layer [in m]  
+  Description: Thickness of the soil layer [in m];   
 	Structure: One value, Samples should be taken at discrete depths which have
 	the same thickness}
   \item{k}{ 
   Description: Plant specific total soil-to-root conductance at each specific 
-  soil layer [in s-1] 
+  soil layer [in s-1];  
 	Structure: A vector - results from the function SoilRootCond - and has n 
 	elements corresponding to the number of soil layers}
   \item{PSIs}{
-  Description: Soil water potential at the each specific soil layer [in m] 
+  Description: Soil water potential at the each specific soil layer [in m];  
 	Structure: A vector of n element, where n corresponds to the number of soil 
-	layers 
+	layers;  
 	Note: The water potentials per soil layer is currently considered static in 
 	time}
   \item{r}{
-  Description: Effective fine root radius [in m] 
+  Description: Effective fine root radius [in m];  
 	Structure: One value,representative of the studied plant}
   \item{rho}{
-  Description: Density of water [kg m-3] 
+  Description: Density of water [kg m-3];  
 	Structure: One constant value, i.e. 1000 kg m-3.}
   \item{t}{ 
-  Description: Cumulative time steps [in s] 
+  Description: Cumulative time steps [in s];  
 	Structure: A vector}
   \item{Z}{ 
-  Description: A vector of Soil depth [in m] 
+  Description: A vector of Soil depth [in m];  
 	Structure: A discrete vector  of n elements, where n corresponds to the 
 	number of soil layers}
 }

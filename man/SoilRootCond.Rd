@@ -1,7 +1,7 @@
 \name{SoilRootCond}
 \alias{SoilRootCond}
 \title{
-Function to calculate soil to root conductivity for every defined soil layer}
+Calculate the soil to root conductivity for every defined soil layer}
 \description{
 This function constructs a vector of soil to root conductivity for every defined
 soil layer [in s-1], while considering the soiltype}
@@ -10,25 +10,25 @@ Soiltype = NULL)}
 \arguments{
   \item{B}{
   Description: Root length density at every discrete soil layer - Results from 
-  the function Bprep - [in m m-3]
+  the function Bprep - [in m m-3]; 
 	Structure: A discrete vector of n elements, with n the number of soil layers} 
   \item{kr}{
-  Description: The root membrane permeability [s-1]
+  Description: The root membrane permeability [s-1]; 
 	Structure: One value, representative of the studied plant}
   \item{PSIs}{
-  Description: Soil water potential at the each specific soil layer [in m] 
+  Description: Soil water potential at the each specific soil layer [in m];  
 	Structure: A vector of n element, where n corresponds to the number of soil 
-	layers 
+	layers;  
 	Note: The water potentials per soil layer is currently considered static in 
 	time}
   \item{Z}{
-  Description: A vector of Soil depth [in m] 
+  Description: A vector of Soil depth [in m];  
 	Structure: A discrete vector of n elements, where n corresponds to the number 
 	of soil layers}
   \item{Soiltype}{  
   Description: Soil Tecture class studied (Sand; Loamy Sand; Sandy Loam; 
   Silt Loam; Loam; Sandy Clay Loam; Silty Clay Loam; Clay Loam;Sandy Clay; 
-  Silty Clay; Clay)
+  Silty Clay; Clay); 
 	Structure: A Character string}
 }
 \details{}
@@ -94,19 +94,19 @@ Felicien Meunier and Hans Verbeeck}
         			b = 8.52
         			sigmasat = 0.476}
     
-			if (Soiltype == "Sandy Clay") {
+			    if (Soiltype == "Sandy Clay") {
         			ksmax = 0.013/(100 * 60)
         			PSIsat = -0.153
         			b = 10.4
         			sigmasat = 0.426}
 
-    			if (Soiltype == "Silty Clay") {
+    	    if (Soiltype == "Silty Clay") {
         			ksmax = 0.0062/(100 * 60)
         			PSIsat = -0.49
         			b = 10.4
         			sigmasat = 0.492}
 
-			if (Soiltype == "Clay") {
+			    if (Soiltype == "Clay") {
         			ksmax = 0.0077/(100 * 60)
         			PSIsat = -0.405
         			b = 11.4

@@ -1,20 +1,20 @@
 \name{Bprep}
 \alias{Bprep}
-\title{Function to calculate root length distribution with depth}
+\title{Calculate the root length distribution with depth}
 \description{ 
 This function constructs a vector containing the root length distribution of a 
 plant at every defined soil layer [in m m-3]}
 \usage{ Bprep(beta = NULL, R0 = NULL, Z = NULL)}
 \arguments{
   \item{beta}{
-  Description: Factor in the root length density distribution function
-		Structure: One value, derived from Jackson et al. (1996), table 1}
+  Description: Factor in the root length density distribution function; 
+	Structure: One value, derived from Jackson et al. (1996), table 1}
   \item{R0}{
-  Description: Factor in the root lenght density distribution function
-	Structure: One value,representative of the studied plant, here derived 
+  Description: Factor in the root lenght density distribution function; 
+	Structure: One value, representative of the studied plant, here derived 
 	from Huang et al, 2017}
   \item{Z}{	
-  Description: A vector of soil depths [in m]		
+  Description: A vector of soil depths [in m]; 		
 	Structure: A discrete vector  of n elements, where n corresponds to the number
 	of soil layers}
 }
