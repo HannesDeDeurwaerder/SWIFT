@@ -40,7 +40,6 @@ Use the **devtools** package to install the current development version from R.
 	# PACKAGE DEVTOOLS REQUIRED
 	#--------------------------
 	require(devtools)
-	library('devtools')
 
 	# INSTALL PACKAGE FROM GITHUB REPOSITORY
 	#---------------------------------------
