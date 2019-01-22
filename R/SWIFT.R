@@ -172,7 +172,7 @@
 #'  
 #'  # Making a simple plot of the SWIFT output
 #'
-#'    ylabel=expression(paste(delta,"2H"['X']*" [","\211",", vsmow]"))	
+#'    ylabel=expression(paste(delta,"2H"['X']*" [permil, vsmow]"))	
 #'       # Provide a y-axis label.
 #'    plot(t,StemBase, xlim= c( min(tstud)/tF, max(tstud)/tF ), type='l', 
 #'         lty=2, col='grey', ylab=ylabel, xlab='timesteps')	
