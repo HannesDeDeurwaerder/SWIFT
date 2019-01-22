@@ -393,8 +393,7 @@ PSI0calc <- function(As=NULL,  B=NULL,  dZ=NULL, k=NULL,  PSIs=NULL, r=NULL,
 
       PSI0vec=rep(NA,length(t))
         for (a in 1:length(t)){
-        PSI0vec[a] <- ( ( sum(k*( Z+PSIs)*B) ) - ((SF[a])/(2*pi*rho*r*As*dZ)) ) 
-        / sum(k*B) 
+        PSI0vec[a]<-((sum(k*( Z+PSIs)*B))-((SF[a])/(2*pi*rho*r*As*dZ)))/sum(k*B) 
         }
         return(PSI0vec)
 }
