@@ -157,7 +157,7 @@ The code below defines a simple example of the use of the SWIFT model, based on 
 		# Plot the signature fluctuations at the height defined by the user
 
 	legend( 'bottomleft', c('at stembase',paste0('at ',hom,' m')), lty=c(2,1), 
-			col=('grey', 'blue'), bty='n', cex=0.7)	
+			col=c('grey', 'blue'), bty='n', cex=0.7)	
 		# Add a legend 
 	 
 
