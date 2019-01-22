@@ -152,5 +152,5 @@ The code below defines a simple example of the use of the SWIFT model, based on 
 
 
 ## Thanks
-Special thanks to Marco M. Visser for all his appreciated help in creating this SWIFT package. I also thank all other co-authors for their help in develloping the SWIFT model.
+Special thanks to Marco D. Visser for all his appreciated help in creating this SWIFT package. I also thank all other co-authors for their help in develloping the SWIFT model.
 
