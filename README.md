@@ -83,11 +83,10 @@ The code below defines a simple example of the use of the SWIFT model, based on 
 
 		
 	# SOURCE THE SWIFT MODEL
-        #-----------------------
+  #-----------------------
   	require(SWIFT)
 
-
-	# PREPARE ADITIONAL DATASETS
+  # PREPARE ADITIONAL DATASETS
 	#---------------------------
 		# a. Diurnal sapflow pattern
 		
@@ -131,7 +130,7 @@ The code below defines a simple example of the use of the SWIFT model, based on 
         	StemBase <- SWIFT_SB(As, B, D2Hsoil, dZ, k,  PSIs,  r, rho, t, Z)
         
 		# d. Isotopic signature at specific height and time
-        	tstud <- seq(2*(24*tF), 3*(24*tF),1)  
+        	tstud <- seq(2*(24*tF) , 3*(24*tF) ,1)  
 					# Provides the data of day 3 of the modeled tree 
 					# (We selected day 3 to assure proper spin up of the model). 
         	hom   <- 1.3  	# measured at standard coring height, 1.3 m
