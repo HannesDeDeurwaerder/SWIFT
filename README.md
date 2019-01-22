@@ -139,8 +139,7 @@ The code below defines a simple example of the use of the SWIFT model, based on 
         	D2Htree <- SWIFT_H( Ax, StemBase,  hom, SF, tstud, tF)
         
 		# e. The water potential at stem base
-        	PSI0vec <- PSI0calc(As, B, dZ, k,  PSIs,  rho, t, Z)/CTpsi  
-					# CTpsi to convert from m to MPa     
+        	PSI0vec <- PSI0calc(As, B, dZ, k,  PSIs, r, rho, t, Z)/CTpsi 	# CTpsi to convert from m to MPa     
 
 
 
