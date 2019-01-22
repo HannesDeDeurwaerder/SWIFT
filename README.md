@@ -1,7 +1,7 @@
 SWIFT (0.1) [Release notes](https://github.com/HannesDeDeurwaerder/SWIFT/).
 ----------
 
-The SWIFT model provides multiple functions for tracking stable water ([2H](https://en.wikipedia.org/wiki/Deuterium) and [18O](https://en.wikipedia.org/wiki/Isotopes_of_oxygen)) isotopic fluctuations and variance along the lenght of a plant. Function ***SWIFT _ SB*** and ***SWIFT _ H*** can respectively be used to calculate the isotopic signature over time at the stem base of the plant, or at a by the user defined height and time. Additional functions are ***SoilRootCond***, ***PSI0calc*** and ***Bprep*** which in this order help the user to define *(i)* the soil to root conductivity for every defined soil layer, *(ii)* the water potential at stem base for every timestep, and *(iii)* the root length distribution for every defined soil layer.
+The SWIFT model provides multiple functions for tracking stable water ([2H](https://en.wikipedia.org/wiki/Deuterium) and [18O](https://en.wikipedia.org/wiki/Isotopes_of_oxygen)) isotopic fluctuations and variance along the lenght of a plant. Functions ***SWIFT _ SB*** and ***SWIFT _ H*** can respectively be used to calculate the isotopic signature over time at the stem base of the plant, or at a by the user defined height and time. Additional functions are ***SoilRootCond***, ***PSI0calc*** and ***Bprep*** which in this order help the user to define *(i)* the soil to root conductivity for every defined soil layer, *(ii)* the water potential at stem base for every timestep, and *(iii)* the root length distribution for every defined soil layer.
 
 
 
