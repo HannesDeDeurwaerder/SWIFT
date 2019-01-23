@@ -143,11 +143,9 @@ The code below defines a simple example of the use of the SWIFT model, based on 
 
 	# MAKING A SIMPLE PLOT OF THE SWIFT OUTPUT
 	#-----------------------------------------
-	ylabel=expression(paste(delta,"2H"['X']*" [permil, vsmow]"))	
-		# Provide a y-axis label
 
 	plot(t,StemBase, xlim= c( min(tstud)/tF, max(tstud)/tF ), type='l', lty=2,
-	 	 col='grey', ylab=ylabel, xlab='timesteps')	
+	 	 col='grey', ylab='d2H (permill, VSMOW)', xlab='timesteps')	
 		# Plot the signature fluctuations at the stem base
 	
 	lines( tstud/tF, D2Htree, col='blue')	
