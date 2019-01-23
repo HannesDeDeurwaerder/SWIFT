@@ -83,7 +83,7 @@ The code below defines a simple example of the use of the SWIFT model, based on 
 
 		
 	# SOURCE THE SWIFT MODEL
-  #-----------------------
+	#-----------------------
   	require(SWIFT)
 
   # PREPARE ADITIONAL DATASETS
