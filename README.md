@@ -86,7 +86,7 @@ The code below defines a simple example of the use of the SWIFT model, based on 
 	#-----------------------
   	require(SWIFT)
 
-  # PREPARE ADITIONAL DATASETS
+  	# PREPARE ADITIONAL DATASETS
 	#---------------------------
 		# a. Diurnal sapflow pattern
 		
