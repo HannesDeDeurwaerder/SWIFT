@@ -8,7 +8,7 @@ The SWIFT model provides multiple functions for tracking stable water ([2H](http
 ### Quicklinks
 
 -   [Quick start and tutorials](#quick-start-and-tutorials)
--   [Installation](#the-online-code-files-from-s1-text)
+-   [Installation](#installation)
 -   [Dependencies](#dependencies)
 -   [Examples](#examples)
 -   [Thanks](#thanks)
