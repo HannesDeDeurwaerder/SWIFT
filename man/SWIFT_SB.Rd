@@ -82,7 +82,7 @@ Felicien Meunier and Hans Verbeeck}
 
             				D2Hxylem[a] <- sum(D2Hvec, na.rm = TRUE)
             				rm(D2Hvec)
-            				Qz <- NA
+            				Qi <- NA
         			}
     			}
     		return(D2Hxylem)
