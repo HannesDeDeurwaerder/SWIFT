@@ -127,7 +127,7 @@ The code below defines a simple example of the use of the SWIFT model, based on 
         	k <- SoilRootCond(B, kr, PSIs, Z, 'Silt Loam')
         
 		# c. Isotopic signature fluctuation at stem base
-        	StemBase <- SWIFT_SB(As, B, D2Hsoil, dZ, k,  PSIs,  r, rho, t, Z)
+        	StemBase <- SWIFT_SB(As, B, D2Hsoil, dZ, k,  PSIs,  r, rho, SF, t, Z)
         
 		# d. Isotopic signature at specific height and time
         	tstud <- seq(2*(24*tF) , 3*(24*tF) ,1)  

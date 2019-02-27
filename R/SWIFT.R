@@ -204,7 +204,7 @@
 
 
 SWIFT_SB<-function(As=NULL,  B=NULL, D2Hsoil=NULL, dZ=NULL,   k=NULL,  
-                   PSIs=NULL, r=NULL, rho=NULL,  t=NULL, Z=NULL){
+                   PSIs=NULL, r=NULL, rho=NULL, SF=NULL,  t=NULL, Z=NULL){
   
 
 #===============================================================================

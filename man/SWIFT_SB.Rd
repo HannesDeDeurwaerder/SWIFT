@@ -41,6 +41,10 @@ PSIs = NULL, r = NULL, rho = NULL, t = NULL, Z = NULL)}
   \item{rho}{ 	
   Description: Density of water [kg m-3];  
 	Structure: One constant value, i.e. 1000 kg m-3.}
+	\item{SF}{
+  Description: Instantaneous sap flow over time [in kg s-1];  
+	Structure: A vector of n elements, where n corresponds to the number of 
+	timesteps}
   \item{t}{ 	
   Description: Cumulative time steps [in s];  
 	Structure: A vector}
@@ -60,7 +64,7 @@ Felicien Meunier and Hans Verbeeck}
 \examples{
 ## The function is currently defined as
 		function (As = NULL, B = NULL, D2Hsoil = NULL, dZ = NULL, k = NULL, 
-		PSIs = NULL, r = NULL, rho = NULL, t = NULL, Z = NULL){
+		PSIs = NULL, r = NULL, rho = NULL, SF = NULL, t = NULL, Z = NULL){
     			D2Hxylem = rep(NA, length(t))
     			D2Hvec <- fi <- Qi <- rep(NA, length(Z))
    
