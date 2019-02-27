@@ -10,7 +10,7 @@ should be fed with the output of the SWIFT_SB output}
 tstud = NULL, tF = NULL)}
 \arguments{
   \item{Ax}{	
-  Description: The soil surface area covering the roots [in m2];  
+  Description: The Xylem lumen area [in m2];  
 	Structure: One value, representative of the studied plant}
   \item{D2Hxylem}{	
   Description: The deuterium signature at stem base - derived from the function

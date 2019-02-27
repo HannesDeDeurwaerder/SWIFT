@@ -8,21 +8,9 @@ The SWIFT model provides multiple functions for tracking stable water ([2H](http
 ### Quicklinks
 
 -   [Quick start and tutorials](#quick-start-and-tutorials)
--   [Installation](#the-online-code-files-from-s1-text)
-	-   [Dependencies](#dependencies)
+-   [Installation](#installation)
+-   [Dependencies](#dependencies)
 -   [Examples](#examples)
-    -   [Initialization of the model parameters](#initialization-of-the-model-parameters)
-    -   [Source the SWIFT model](#)
-    -   [Prepare additional input datasets](#prepare-additional-input-datasets)
-    -   [Using the SWIFT model functions](#using-the-swift-model-functions)
-	    -  [A. Root density distribution](#a.-root-density-distribution)
-	    -  [B. The soil-root conductance](#b.-the-soil-root-conductance)
-	    -  [C. Isotopic signature fluctuation at stem base](#c.-isotopic-signature-fluctuation-at-stem-base)
-	    -  [D. Isotopic signature at specific height and time](#d.-isotopic-signature-at-specific-height-and-time)
-	    -  [E. The water potential at stem base](#e.-the-water-potential-at-stem-base) 
-    -   [Example of the SWIFT output](#example-of-the-swift-output)
-	    -  [Making a simple plot of the SWIFT output](#making-a-simple-plot-of-the-wift-output) 	
-
 -   [Thanks](#thanks)
   
 
