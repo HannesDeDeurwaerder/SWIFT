@@ -289,7 +289,7 @@ SWIFT_H<-function(Ax=NULL, D2Hxylem=NULL, hom=NULL, SF=NULL,  tstud=NULL,
       for (w in 1:hts){
       
         
-        # First value will be NA, for spin.
+        # First value will be NA, for spin
         if (a==1){
           D2Hxylem_hom[w,ab] <- NA
           next
@@ -298,7 +298,9 @@ SWIFT_H<-function(Ax=NULL, D2Hxylem=NULL, hom=NULL, SF=NULL,  tstud=NULL,
         # for signatures at stem base, i.e. h=0
         if (hom[w]==0 && a!=1){D2Hxylem_hom[w,ab] <- D2Hxylem[a]
         next
+        }
         
+         
         # for all other cases
             # for the spinup values 
             if(is.nan(cumH[a])){D2Hxylem_hom[w,ab] <- D2Hxylem[a-1]
