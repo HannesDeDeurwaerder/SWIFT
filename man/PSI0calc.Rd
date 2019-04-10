@@ -59,7 +59,7 @@ Felicien Meunier and Hans Verbeeck}
 		rho = NULL, t = NULL, Z = NULL){
     			PSI0vec = rep(NA, length(t))
     			for (a in 1:length(t)) {
-        		   PSI0vec[a] <-((sum(k * (Z + PSIs) * B)) - 
+        		   PSI0vec[a] <-((sum(k * (-Z + PSIs) * B)) - 
         		                ((SF[a])/(2 * pi * rho * r * As * dZ)))/sum(k * B)
     			}
     		return(PSI0vec)
