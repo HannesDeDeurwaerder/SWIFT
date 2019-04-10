@@ -223,7 +223,7 @@ SWIFT_SB<-function(As=NULL,  B=NULL, D2Hsoil=NULL, dZ=NULL,   k=NULL,
     
       for (a in 1:length(t)){
         # Water potential at stem base
-        PSI0 <- ((sum(k*(Z+PSIs)*B))-((SF[a])/(2*pi*rho*r*As*dZ)))/sum(k*B) 
+        PSI0 <- ((sum(k*(-Z+PSIs)*B))-((SF[a])/(2*pi*rho*r*As*dZ)))/sum(k*B) 
     
         if(a==1){D2Hxylem[a]<-NA}     # first value is NA due to model spin-up.
         if((SF[a]=0 & a!=1) | (is.nan(SF[a]) & a!=1) ){
@@ -234,7 +234,7 @@ SWIFT_SB<-function(As=NULL,  B=NULL, D2Hsoil=NULL, dZ=NULL,   k=NULL,
         }else{
           
           # Relative contribution of every soil layer
-          PSIdelta <- PSI0-PSIs 
+          PSIdelta <- PSI0-(-Z+PSIs) 
           
           Qi <- PSIdelta * B * k
           Qi[is.na(PSIdelta) | PSIdelta>=0] <- NA
@@ -276,6 +276,13 @@ SWIFT_H<-function(Ax=NULL, D2Hxylem=NULL, hom=NULL, SF=NULL,  tstud=NULL,
       D2Hxylem_hom <- matrix(NA,hts,tms)
       uc <-((60/tF)*60) /1000  # unit conversion.
       
+      # Cumulative SF vector
+      cumSF=cumsum(SF) # Cumulative sapflow 
+      cumH=uc*cumSF/Ax # Cumulative Height reached by the sapflow
+      cumH[which(cumSF==0)]<-NaN 
+      # No sapflow yet, this is the spinup, should be set at NA
+      
+      
       for (ab in 1:tms){
         a=tstud[ab] # By user defined timesteps. 
         
@@ -293,35 +300,29 @@ SWIFT_H<-function(Ax=NULL, D2Hxylem=NULL, hom=NULL, SF=NULL,  tstud=NULL,
         next
         
         # for all other cases
-        }else{
-            delay=0
+            # for the spinup values 
+            if(is.nan(cumH[a])){D2Hxylem_hom[w,ab] <- D2Hxylem[a-1]
+            next
             
-            # All other cases
-                hloop <- hom[w] # by user defined heights of measurement. 
-            
-                  if( SF[a-delay]*uc >= (hloop*Ax)){
-                    D2Hxylem_hom[w,ab] <- D2Hxylem[a-delay]
-                    next
-                    }
-            
-                  # Cummulative loop to find the delay
-                  while ( (SF[a-delay]*uc)  < (hloop*Ax)  && (a-delay)>0){
-                    hloop <- hloop - ( (SF[a-delay]*uc)  / (Ax) )
-                    delay <- delay+1
-                  }
-                
+            }else{
+              # not spinup values
+              CumHt <- cumH -(cumH[a])+ hom[w]
+              delay <- a - which(abs(CumHt)==min(abs(CumHt), na.rm=TRUE)) # Total delay for the sapflow to reach hom (time)
               
-                    # Delay extends the datarange?
-                    if (a - delay<=0){
-                      D2Hxylem_hom[w,ab] <- NA  
-                      # only a problem during model spin up.
-                    }else{        
-                      D2Hxylem_hom[w,ab] <- D2Hxylem[a-delay]
-                    }
-                      
-                }
+              # Delay extends the datarange?
+              if (length(delay)==0){
+                D2Hxylem_hom[w,ab] <- NA  # only a problem during model spin up
+              }else{
+                D2Hxylem_hom[w,ab] <- D2Hxylem[a-delay]
+              }  
+              
+              rm(delay); 
+              
             }
-            }
+            
+        
+        }
+      }
       return(D2Hxylem_hom)
       
 }    
@@ -394,7 +395,7 @@ PSI0calc <- function(As=NULL,  B=NULL,  dZ=NULL, k=NULL,  PSIs=NULL, r=NULL,
 
       PSI0vec=rep(NA,length(t))
         for (a in 1:length(t)){
-        PSI0vec[a]<-((sum(k*( Z+PSIs)*B))-((SF[a])/(2*pi*rho*r*As*dZ)))/sum(k*B) 
+        PSI0vec[a]<-((sum(k*(-Z+PSIs)*B))-((SF[a])/(2*pi*rho*r*As*dZ)))/sum(k*B) 
         }
         return(PSI0vec)
 }

@@ -52,37 +52,37 @@ Felicien Meunier and Hans Verbeeck}
     			tms <- length(as.vector(tstud))
     			D2Hxylem_hom <- matrix(NA, hts, tms)
     			uc <- ((60/tF) * 60)/1000
-    			for (ab in 1:tms) {
-        			a = tstud[ab]
-       				   for (w in 1:hts) {
-            				if (a == 1) {
-						D2Hxylem_hom[w, ab] <- NA
-                				next}
-
-            				if (hom[w] == 0 && a != 1) {
-                				D2Hxylem_hom[w, ab] <- D2Hxylem[a]
-                				next}
-            				else {
-                				delay = 0
-               					hloop <- hom[w]
-                				if (SF[a - delay] * uc >= (hloop * Ax)) {
-                  					D2Hxylem_hom[w, ab] <- D2Hxylem[a - delay]
-                  					next}
-
-                					while ((SF[a - delay] * uc) < (hloop * Ax) && 
-                					(a - delay) > 0) {
-						        	      hloop <- hloop - ((SF[a - delay] * uc)/(Ax))
-                  					delay <- delay + 1
-                					}
-
-					                if (a - delay <= 0) {
-						                 D2Hxylem_hom[w, ab] <- NA}
-                					else {
-						                 D2Hxylem_hom[w, ab] <- D2Hxylem[a - delay]
-                					}
-            					}
-        				}
-    			}
-    			return(D2Hxylem_hom)
-  		}
+    			
+    			cumSF=cumsum(SF) 
+          cumH=uc*cumSF/Ax 
+          cumH[which(cumSF==0)]<-NaN 
+  
+  for (ab in 1:tms){
+      a=tstud[ab]
+  
+    for (w in 1:hts){
+        if (a==1){
+        D2Hxylem_hom[w,ab] <- NA
+        next
+    }
+    if (hom[w]==0 && a!=1){D2Hxylem_hom[w,ab] <- D2Hxylem[a]
+      next}
+    
+    if(is.nan(cumH[a])){D2Hxylem_hom[w,ab] <- D2Hxylem[a-1]
+      next
+    }else{
+        CumHt <- cumH -(cumH[a])+ hom[w]
+        delay <- a - which(abs(CumHt)==min(abs(CumHt), na.rm=TRUE)) 
+                  
+            if (length(delay)==0){
+              D2Hxylem_hom[w,ab] <- NA  
+            }else{
+              D2Hxylem_hom[w,ab] <- D2Hxylem[a-delay]
+            }  
+            rm(delay); 
+          }
+        }
+      }
+    return(D2Hxylem_hom)
+  }
 }
