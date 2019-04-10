@@ -69,7 +69,7 @@ Felicien Meunier and Hans Verbeeck}
     			D2Hvec <- fi <- Qi <- rep(NA, length(Z))
    
 			for (a in 1:length(t)) {
-        			PSI0 <- ((sum(k * (Z + PSIs) * B)) - ((SF[a])/
+        			PSI0 <- ((sum(k * (-Z + PSIs) * B)) - ((SF[a])/
         			(2 * pi * rho * r * As * dZ)))/sum(k * B)
         	
 				if (a == 1) { D2Hxylem[a] <- NA }
@@ -77,7 +77,7 @@ Felicien Meunier and Hans Verbeeck}
         			if ((SF[a] = 0 & a != 1) | (is.nan(SF[a]) & a != 1)) {
             				D2Hxylem[a] <- D2Hxylem[a - 1] }
         			else {
-            				PSIdelta <- PSI0 - PSIs
+            				PSIdelta <- PSI0 - (-Z + PSIs)
             				Qi <- PSIdelta * B * k
             				Qi[is.na(PSIdelta) | PSIdelta >= 0] <- NA
 
