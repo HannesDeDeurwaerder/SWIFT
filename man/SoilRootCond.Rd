@@ -115,8 +115,8 @@ Felicien Meunier and Hans Verbeeck}
     			k = ks <- rep(NA, length(Z))
     			   for (h in 1:length(Z)) {
         			ks[h] <- ksmax * (PSIsat/PSIs[h])^(2 + 3/b)
-        			k[h] <- (kr * (ks[h] * sqrt(pi * B[h])))/(0.53 * (kr + 
-        			(ks[h] * sqrt(pi * B[h]))))
+        			k[h] <- kr * ks[h] * sqrt(pi * B[h]) / (0.53 * kr + 
+        			ks[h] * sqrt(pi * B[h]) )
 			   }
     			return(k)
   			}
