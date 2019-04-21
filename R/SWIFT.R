@@ -422,7 +422,7 @@ Bprep<-function( beta=NULL, R0=NULL, Z=NULL){
       UnCo <- 100 # unit conversion from m to cm.
       
         for (h in 1:length(Z)){
-          B[h]= R0* beta^(UnCo*Z[h])*log2(beta)    
+          B[h]= R0* beta^(UnCo*Z[h])*log(beta, base=exp(1))    
         }
       
       return(B)
