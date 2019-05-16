@@ -83,14 +83,15 @@ the example provided in the paper of **De Deurwaerder et al, (In Review)**
         # ARtot in [m^2] via DBH[in cm] (Cermak et al, 2006)
 
 	R0  <- 438688      # Derived from Huang et al, 2017
-  betaCom <- 0.976   # Derived from Jackson et al., 1996 [table 1, beta-term].
-  beta <-  0.976     # Derived from Jackson et al., 1996 [table 1, beta-term].
+  betaCom  <- 0.976  # Derived from Jackson et al, 1996 [table 1, beta-term]
+  beta     <- 0.976  # Derived from Jackson et al, 1996 [table 1, beta-term]
+
 		
 	# SOURCE THE SWIFT MODEL
 	#-----------------------
   	require(SWIFT)
 
-  	# PREPARE ADITIONAL DATASETS
+  # PREPARE ADITIONAL DATASETS
 	#---------------------------
 		# a. Diurnal sapflow pattern
 		
@@ -154,18 +155,17 @@ the example provided in the paper of **De Deurwaerder et al, (In Review)**
 
 	# MAKING A SIMPLE PLOT OF THE SWIFT OUTPUT
 	#-----------------------------------------
-  ylabel=expression(paste(delta,""^"2","H"," [","\211",", vsmow]"))
-
-	plot(t,StemBase, xlim= c( min(tstud)/tF, max(tstud)/tF), type='l', lty=2,
-	 	 col='grey', ylab=ylabel, xlab='timesteps', mgp = c(2, 0.8, 0))	
-		# Plot the signature fluctuations at the stem base
+          plot(t,StemBase, xlim= c( min(tstud)/tF, max(tstud)/tF), type='l', 
+          lty=2,col='grey', ylab='d2H [permil, vsmow]', xlab='timesteps', 
+          mgp = c(2, 0.8, 0))	
+		        # Plot the signature fluctuations at the stem base
 	
-	lines( tstud/tF, D2Htree, col='blue')	
-		# Plot the signature fluctuations at the height defined by the user
+          lines( tstud/tF, D2Htree, col='blue')	
+		        # Plot the signature fluctuations at the height defined by the user
 
-	legend( 'bottomleft', c('at stembase',paste0('at ',hom,' m')), lty=c(2,1), 
-			col=c('grey', 'blue'), bty='n', cex=0.7)	
-		# Add a legend 
+	        legend( 'bottomleft', c('at stembase',paste0('at ',hom,' m')), 
+	        lty=c(2,1), col=c('grey', 'blue'), bty='n', cex=0.7)	
+	          # Add a legend 
 	 
 
 
