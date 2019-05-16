@@ -1,7 +1,17 @@
 SWIFT (0.1) [Release notes](https://github.com/HannesDeDeurwaerder/SWIFT/).
 ----------
 
-The SWIFT model provides multiple functions for tracking stable water ([2H](https://en.wikipedia.org/wiki/Deuterium) and [18O](https://en.wikipedia.org/wiki/Isotopes_of_oxygen)) isotopic fluctuations and variance along the lenght of a plant. Functions ***SWIFT _ SB*** and ***SWIFT _ H*** can respectively be used to calculate the isotopic signature over time at the stem base of the plant, or at a by the user defined height and time. Additional functions are ***SoilRootCond***, ***PSI0calc*** and ***Bprep*** which in this order help the user to define *(i)* the soil to root conductivity for every defined soil layer, *(ii)* the water potential at stem base for every timestep, and *(iii)* the root length distribution for every defined soil layer.
+The SWIFT model provides multiple functions for tracking stable water 
+([2H](https://en.wikipedia.org/wiki/Deuterium) and 
+[18O](https://en.wikipedia.org/wiki/Isotopes_of_oxygen)) isotopic fluctuations 
+and variance along the lenght of a plant. Functions ***SWIFT _ SB*** and 
+***SWIFT _ H*** can respectively be used to calculate the isotopic signature 
+over time at the stem base of the plant, or at a by the user defined height 
+and time. Additional functions are ***SoilRootCond***, ***PSI0calc*** and 
+***Bprep*** which in this order help the user to define *(i)* the soil to root
+conductivity for every defined soil layer, *(ii)* the water potential at stem 
+base for every timestep, and *(iii)* the root length distribution for every 
+defined soil layer.
 
 
 
@@ -16,7 +26,10 @@ The SWIFT model provides multiple functions for tracking stable water ([2H](http
 
 ## Quick start and tutorials
 
-An in depth description of the formula used within the SWIFT model can be found in **De Deurwaerder et al (In Review).** The example provided, in combination with the provided comments in the R-script should enable the user to succesfully run the model. 
+An in depth description of the formula used within the SWIFT model can be found 
+in **De Deurwaerder et al (In Review).** The example provided, in combination 
+with the provided comments in the R-script should enable the user to succesfully
+run the model. 
 
 
 ## Installation
@@ -41,28 +54,30 @@ SWIFT has no other dependencies other than the base R installation.
 
 ## Examples
 
-The code below defines a simple example of the use of the SWIFT model, based on the example provided in the paper of **De Deurwaerder et al, (In Review)** <Link will be added upon acceptance>
+The code below defines a simple example of the use of the SWIFT model, based on
+the example provided in the paper of **De Deurwaerder et al, (In Review)** 
+<Link will be added upon acceptance>
 
 
 ### Run the SWIFT model
 
 	# PARAMETERS INITIALISATION
 	#--------------------------
-	n   <- 20     # Multiple number of days studied, needed for	spin up of the model
-	tF  <- 60     # Time frequence of measurements per hour [in measurments per h] 
+	n   <- 20  # Multiple number of days studied, needed for	spin up of the model
+	tF  <- 60  # Time frequence of measurements per hour [in measurments per h] 
 	t   <- seq(0,24*n,length.out = 24*tF*n)     # Discrete time vector [in h]
 	dZ  <- 0.001    # Thickness of sampled layer [in m]	
 	L   <- 1        # maximum soil depth [in m]
-	Z   <- seq(dZ,L,dZ)    # Discrete depth vector centered [in m]
-	kr  <- 10*10^(-10) 	   # root membrane permeability [in s-1] 
-						   # (source: Leuschner et al, 2004)
+	Z   <- seq(dZ,L,dZ)  # Discrete depth vector centered [in m]
+	kr  <- 10*10^(-10) 	 # root membrane permeability [in s-1] 
+	                     # (source: Leuschner et al, 2004)
 	
 	DBH <- 0.213  # Diameter at breast height [in m]
 	LA  <- 0.136  # Lumen Fraction, i.e. lumen area/sapwood area [%]
 				  # (derived from Zanne et al, 2010) [table 2, F-value]            
 	Ax  <- LA * ((1.582*((DBH*100)^1.764)) /10^4)    
 				# Total lumen area  of the studied tree [m²],i.e. the lumen area 
-                # fraction multiplied by sapwood area estimated from the DBH 
+        # fraction multiplied by sapwood area estimated from the DBH 
  				# (Meinzer et al, 2001) 
  	ARtot <- exp(0.88*log(pi*2*(100*DBH/2)^2)-2)  
         # ARtot in [m^2] via DBH[in cm] (Cermak et al, 2006)
@@ -79,10 +94,12 @@ The code below defines a simple example of the use of the SWIFT model, based on 
 	#---------------------------
 		# a. Diurnal sapflow pattern
 		
-			data(SFday) 	# SF for one day, time frequency: every min, expressed in
+			data(SFday) 	
+			    # SF for one day, time frequency: every min, expressed in
 					# [kg h-1]. This data is derived from Huang et al, 2017
-     			uch <- 60*60*1000   	# unit conversion: h to sec; from kg to m3
-			SF  <- c( rep(SFday,n) )/(uch)		# repetition of SF day over n prefered days
+     	uch <- 60*60*1000   	# unit conversion: h to sec; from kg to m3
+			SF  <- c( rep(SFday,n) )/(uch)
+			    # repetition of SF day over n prefered days
 
 		# b. Soil water potential curve with depth, from Meissner et al, 2012
 			CTpsi <- 101.97		# Conversion factor between MPa and m H2O
@@ -124,13 +141,14 @@ The code below defines a simple example of the use of the SWIFT model, based on 
         
 		# e. Isotopic signature at specific height and time
         	tstud <- seq(2*(24*tF) , 3*(24*tF) ,1)  
-					# Provides the data of day 3 of the modeled tree 
-					# (We selected day 3 to assure proper spin up of the model). 
+					  # Provides the data of day 3 of the modeled tree 
+					  # (We selected day 3 to assure proper spin up of the model). 
         	hom<- 1.3  	# measured at standard coring height, 1.3 m
         	D2Htree <- SWIFT_H( Ax, StemBase,  hom, SF, tstud, tF)
         
 		# e. The water potential at stem base
-        	PSI0vec <- PSI0calc(ARi,  k,  PSIs,  SF/60, t, Z)/CTpsi 	# CTpsi to convert from m to MPa     
+        	PSI0vec <- PSI0calc(ARi,  k,  PSIs,  SF/60, t, Z)/CTpsi 	
+        	  # CTpsi to convert from m to MPa     
 
 
 
@@ -152,5 +170,7 @@ The code below defines a simple example of the use of the SWIFT model, based on 
 
 
 ## Thanks
-Special thanks to Marco D. Visser for all his appreciated help in creating this SWIFT package. I also thank all other co-authors for their help in develloping the SWIFT model.
+Special thanks to Marco D. Visser for all his appreciated help in creating this 
+SWIFT package. I also thank all other co-authors for their help in develloping 
+the SWIFT model.
 
