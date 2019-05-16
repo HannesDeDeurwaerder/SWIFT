@@ -149,7 +149,7 @@ the example provided in the paper of **De Deurwaerder et al, (In Review)**
         	D2Htree <- SWIFT_H( Ax, StemBase,  hom, SF, tstud, tF)
         
 		# e. The water potential at stem base
-        	PSI0vec <- PSI0calc(ARi,  k,  PSIs,  SF/60, t, Z)/CTpsi 	
+        	PSI0vec <- PSI0calc(ARi,  k,  PSIs,  SF, t, Z)/CTpsi 	
         	  # CTpsi to convert from m to MPa     
 
 
