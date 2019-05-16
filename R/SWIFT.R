@@ -4,17 +4,24 @@
 #' @title SWIFT model (Stable Water Isotope Fluctuation within Trees)
 #' 
 #' 
-#' 
-#' @param As    Description: The soil surface area covering the roots [in m2];  
-#'              Structure:   One value, representative of the studied plant.
+#' @param ARtot Description: The total fine root area area of the focal plant
+#'                           [in m2];  
+#'              Structure:   One value, representative of the studied plant. 
 #' @param Ax    Description: The total lumen area [in m2];  
 #'              Structure:   One value, representative of the studied plant.
-#' @param B     Description: Root length density at every discrete soil layer 
+#' @param B     Description: The comunity plant Root length density at every 
+#'                           discrete soil layer 
 #'                           - Results from the function Bprep - [in m m-3]; 
 #'              Structure:   A discrete vector of n elements, with n the number 
-#'                           of soil layers. 
+#'                           of soil layers.
 #' @param beta  Description: Factor in the root length density distribution 
-#'                           function; 
+#'                           function for the focal plant; 
+#'              Structure:   One value, derived from Jackson et al. (1996), 
+#'                           table 1.
+#' @param betaCom  Description: Factor in the root length density distribution 
+#'                           function of the plant community 
+#'                           (required to distribute the root length over all 
+#'                           soil layers) 
 #'              Structure:   One value, derived from Jackson et al. (1996), 
 #'                           table 1.
 #' @param D2Hxylem  Description: The deuterium signature at stem base - derived 
@@ -45,15 +52,12 @@
 #'                           number of soil layers;  
 #'              Note:        The water potentials per soil layer is currently 
 #'                           considered static in time.
-#' @param r     Description: Effective fine root radius [in m]; 
-#'              Structure:   One value,representative of the studied plant.
-#' @param R0    Description: Factor in the root lenght density distribution 
-#'                           function;  
+#' @param R0    Description: Factor in the root lenght density distribution per 
+#'                           unit of soil, for entire plant community;
+#'              NOTE:        Provide a Positive value!!  
 #'              Structure:   One value,representative of the studied plant, here
 #'                           derived from Huang et al, 2017.
-#' @param rho   Description: Density of water [kg m-3];  
-#'              Structure:   One constant value, i.e. 1000 kg m-3. 
-#' @param SF    Description: Instantaneous sap flow over time [in kg s-1];  
+#' @param SF    Description: Instantaneous sap flow over time [in m^3 s-1];  
 #'              Structure:   A vector of n elements, where n corresponds to the 
 #'                           number of timesteps.
 #' @param Soiltype  Description:  Type of soil layer (Sand; Loamy Sand; 
@@ -93,13 +97,10 @@
 #'                        # [in measurments per h].
 #'   t   <- seq(0,24*n,length.out = 24*tF*n)     # Discrete time vector [in h].
 #'   dZ  <- 0.001         # Thickness of sampled layer [in m].
-#'   rho <- 1000          # Density of water [kg m^(-3)].
 #'   L   <- 1             # maximum soil depth [in m].
 #'   Z   <- seq(dZ,L,dZ)  # Discrete depth vector centered [in m].
 #'   kr  <- 10*10^(-10)   # root membrane permeability [in s^(-1)] 
 #'                        # (source: Leuschner et al, 2004).
-#'   As  <- 1             # Soil surface area covering the roots [in m^2].
-#'   r   <- 0.0005        # Effective root radius [in m].
 #'   DBH <- 0.213         # Diameter at breast height [in m].
 #'   LA  <- 0.136         # Lumen Fraction, i.e. lumen area/sapwood area [%]
 #'                        # (derived from Zanne et al, 2010) [table 2, F-value].            
@@ -107,10 +108,13 @@
 #'                        # Total lumen area of the studied tree [m^2],i.e. the 
 #'                        # lumena area fraction multiplied by sapwood area 
 #'                        # estimated from the DBH (Meinzer et al, 2001) . 
-#'   R0  <- -438688       # Derived from Huang et al, 2017.
-#'   beta<- 0.966         # Derived from Jackson et al., 1996 [table 1, 
+#'   ARtot <- exp(0.88*log(pi*2*(100*DBH/2)^2)-2)  
+#'                        # ARtot in [m^2] via DBH[in cm] (Cermak et al, 2006)
+#'   R0  <- 438688       # Derived from Huang et al, 2017.
+#'   betaCom <- 0.976     # Derived from Jackson et al., 1996 [table 1, 
 #'                        # beta-term].
-#'
+#'   beta <-  0.976       # Derived from Jackson et al., 1996 [table 1, 
+#'                        # beta-term].
 #' # Source the SWIFT model
 #'   require("SWIFT")
 #'
@@ -119,7 +123,7 @@
 #'   data(SFday)     
 #'    # SF for one day, time frequency: every min, expressed in [kg h-1].
 #'    # This data is derived from Huang et al, 2017.
-#'     uch <- 60*60              # unit conversion: h to sec.
+#'     uch <- (60/tF)*60*1000              # unit conversion: h to sec. and kg to m3
 #'     SF  <- c(rep(SFday,n))/(uch) # repetition of SF day over n prefered days.
 #'    
 #' # Soil water potential curve with depth, from Meissner et al, 2012
@@ -145,15 +149,19 @@
 #'  # Using the SWIFT model functions
 #'   
 #'        # A. Root density distribution 
-#'        B <- Bprep(beta, R0, Z) # output is in [m m^(-3)].
+#'        B <- Bprep(betaCom, R0, Z) # output is in [m m^(-3)].
 #'        
 #'        # B. the soil-root conductance
 #'        k <- SoilRootCond(B, kr, PSIs, Z, 'Silt Loam')
 #'        
-#'        # C. Isotopic signature fluctuation at stem base
-#'        StemBase <- SWIFT_SB(As, B, D2Hsoil, dZ, k,  PSIs,  r, rho, t, Z)
+#'        # C. the ARi
+#'        devio=beta^(100*Z)*(1-beta^(100*dZ))
+#'        ARi=ARtot*devio/sum(devio)
 #'        
-#'        # D. Isotopic signature at specific height and time
+#'        # D. Isotopic signature fluctuation at stem base
+#'        StemBase <- SWIFT_SB(ARi, D2Hsoil,  k,  PSIs,  SF, t, Z)
+#'        
+#'        # E. Isotopic signature at specific height and time
 #'        tstud <- seq(2*(24*tF), 3*(24*tF),1)    
 #'           # Provides the data of day 3 of the modeled tree. 
 #'           # (We selected day 3 to assure proper spin up of the model).
@@ -161,7 +169,7 @@
 #'        D2Htree <- SWIFT_H( Ax, StemBase,  hom, SF, tstud, tF)
 #'        
 #'        # E. The Water potential at stem base
-#'        PSI0vec <- PSI0calc(As, B, dZ, k,  PSIs,  rho, t, Z)/CTpsi  
+#'        PSI0vec <- PSI0calc(ARi,  k,  PSIs,  Sf, t, Z)/CTpsi  
 #'           # CTpsi to convert from m to MPa.     
 #'        
 #'        
@@ -172,15 +180,15 @@
 #'  
 #'  # Making a simple plot of the SWIFT output
 #'
-#'    ylabel=expression(paste(delta,"2H"['X']*" [permil, vsmow]"))	
-#'       # Provide a y-axis label.
-#'    plot(t,StemBase, xlim= c( min(tstud)/tF, max(tstud)/tF ), type='l', 
-#'         lty=2, col='grey', ylab=ylabel, xlab='timesteps')	
-#'       # Plot the signature fluctuations at the stem base.
-#'    lines( tstud/tF, D2Htree, col='blue')	
-#'       # Plot the signature fluctuations at the height defined by the user.
-#'    legend( 'bottomleft', c('at stembase',paste0('at ',hom,' m')), lty=c(2,1),
-#'            col=c('grey', 'blue'), bty='n', cex=0.7)	# add a legend. 
+#'   	# MAKING A SIMPLE PLOT OF THE SWIFT OUTPUT
+#'       ylabel=expression(paste(delta,""^"2","H"," [","\211",", vsmow]"))
+#'      plot(t,StemBase, xlim= c( min(tstud)/tF, max(tstud)/tF), type='l', 
+#'      lty=2, col='grey', ylab=ylabel, xlab='timesteps', mgp = c(2, 0.8, 0))	
+#'          # Plot the signature fluctuations at the stem base
+#'      lines( tstud/tF, D2Htree, col='blue')	
+#'          # Plot the signature fluctuations at the height defined by the user
+#'      legend( 'bottomleft', c('at stembase',paste0('at ',hom,' m')), 
+#'      lty=c(2,1), col=c('grey', 'blue'), bty='n', cex=0.7)	
 #'                    
 #' load()
 #'	}
@@ -203,8 +211,7 @@
 #'##############################################################################
 
 
-SWIFT_SB<-function(As=NULL,  B=NULL, D2Hsoil=NULL, dZ=NULL,   k=NULL,  
-                   PSIs=NULL, r=NULL, rho=NULL, SF=NULL,  t=NULL, Z=NULL){
+SWIFT_SB<-function(ARi=NULL, D2Hsoil=NULL, k=NULL, PSIs=NULL,  SF=NULL,  t=NULL, Z=NULL){
   
 
 #===============================================================================
@@ -218,12 +225,12 @@ SWIFT_SB<-function(As=NULL,  B=NULL, D2Hsoil=NULL, dZ=NULL,   k=NULL,
     
       # Declare empty vectors
       D2Hxylem=rep(NA,length(t))    
-      D2Hvec <- fi <- Qi <- rep(NA,length(Z))        
+      D2Hvec <- fi <- RWU <- rep(NA,length(Z))        
       
     
       for (a in 1:length(t)){
         # Water potential at stem base
-        PSI0 <- ((sum(k*(-Z+PSIs)*B))-((SF[a])/(2*pi*rho*r*As*dZ)))/sum(k*B) 
+        PSI0 <- (sum(k*ARi*(PSIs-Z)) - SF[a])/ sum(k*ARi)
     
         if(a==1){D2Hxylem[a]<-NA}     # first value is NA due to model spin-up.
         if((SF[a]=0 & a!=1) | (is.nan(SF[a]) & a!=1) ){
@@ -234,20 +241,20 @@ SWIFT_SB<-function(As=NULL,  B=NULL, D2Hsoil=NULL, dZ=NULL,   k=NULL,
         }else{
           
           # Relative contribution of every soil layer
-          PSIdelta <- PSI0-(-Z+PSIs) 
+          PSIdelta <- PSI0-(PSIs-Z) 
           
-          Qi <- PSIdelta * B * k
-          Qi[is.na(PSIdelta) | PSIdelta>=0] <- NA
+          RWU <- k*ARi*PSIdelta 
+          RWU[is.na(PSIdelta) | PSIdelta>=0] <- NA
           
           
           # Isotopic signature at every soil layer
-          fi <- Qi/sum(Qi, na.rm=TRUE)
+          fi <- RWU/sum(RWU, na.rm=TRUE)
           D2Hvec <-  fi*D2Hsoil
           
           
           # Summation over all soil layers
           D2Hxylem[a] <- sum(D2Hvec, na.rm=TRUE)
-          rm(D2Hvec); Qz <- NA;
+          rm(D2Hvec);
         }    
       }
       return(D2Hxylem)
@@ -274,12 +281,12 @@ SWIFT_H<-function(Ax=NULL, D2Hxylem=NULL, hom=NULL, SF=NULL,  tstud=NULL,
       tms <-  length( as.vector(tstud))  # vector of user defined sample times.
       
       D2Hxylem_hom <- matrix(NA,hts,tms)
-      uc <-((60/tF)*60) /1000  # unit conversion.
+      uc <-((60/tF)*60) # unit conversion.
       
       # Cumulative SF vector
       cumSF=cumsum(SF) # Cumulative sapflow 
       cumH=uc*cumSF/Ax # Cumulative Height reached by the sapflow
-      cumH[which(cumSF==0)]<-NaN 
+      cumH[which(cumSF==0)]<-NaN
       # No sapflow yet, this is the spinup, should be set at NA
       
       
@@ -291,7 +298,7 @@ SWIFT_H<-function(Ax=NULL, D2Hxylem=NULL, hom=NULL, SF=NULL,  tstud=NULL,
         
         # First value will be NA, for spin
         if (a==1){
-          D2Hxylem_hom[w,ab] <- NA
+          D2Hxylem_hom[w,ab] <- NaN
           next
         }
         
@@ -309,16 +316,18 @@ SWIFT_H<-function(Ax=NULL, D2Hxylem=NULL, hom=NULL, SF=NULL,  tstud=NULL,
             }else{
               # not spinup values
               CumHt <- cumH -(cumH[a])+ hom[w]
-              delay <- a - which(abs(CumHt)==min(abs(CumHt), na.rm=TRUE)) # Total delay for the sapflow to reach hom (time)
+              Minind <-  which(abs(CumHt)==min(abs(CumHt), na.rm=TRUE)) 
+              # Total delay for the sapflow to reach hom (time)
               
               # Delay extends the datarange?
-              if (length(delay)==0){
-                D2Hxylem_hom[w,ab] <- NA  # only a problem during model spin up
+              if (length(Minind)==0){
+                D2Hxylem_hom[w,ab] <- NaN  # only a problem during model spin up
               }else{
+                delay=a-Minind[1]
                 D2Hxylem_hom[w,ab] <- D2Hxylem[a-delay]
               }  
               
-              rm(delay); 
+              rm(delay); rm(Minind) 
               
             }
             
@@ -375,7 +384,7 @@ SoilRootCond <- function(B=NULL, kr=NULL, PSIs=NULL, Z=NULL, Soiltype=NULL ){
           ks[h] <-  ksmax * (PSIsat/PSIs[h])^(2+3/b)    
           k[h]<- kr * ks[h]*sqrt(pi*B[h]) / (0.53*kr + ks[h]*sqrt(pi*B[h]) )
     
-}
+        }
         
         return(k)
         
@@ -386,8 +395,7 @@ SoilRootCond <- function(B=NULL, kr=NULL, PSIs=NULL, Z=NULL, Soiltype=NULL ){
 ################################################################################
 
 
-PSI0calc <- function(As=NULL,  B=NULL,  dZ=NULL, k=NULL,  PSIs=NULL, r=NULL, 
-                     rho=NULL,  t=NULL, Z=NULL){
+PSI0calc <- function(ARi=NULL, k=NULL,  PSIs=NULL, SF=NULL, t=NULL, Z=NULL){
   
 #===============================================================================
 #                          WATER POTENTIAL AT STEM BASE  
@@ -397,7 +405,7 @@ PSI0calc <- function(As=NULL,  B=NULL,  dZ=NULL, k=NULL,  PSIs=NULL, r=NULL,
 
       PSI0vec=rep(NA,length(t))
         for (a in 1:length(t)){
-        PSI0vec[a]<-((sum(k*(-Z+PSIs)*B))-((SF[a])/(2*pi*rho*r*As*dZ)))/sum(k*B) 
+          PSI0vec[a]<-(sum(k*ARi*(PSIs-Z)) - SF[a])/ sum(k*ARi)
         }
         return(PSI0vec)
 }
@@ -422,7 +430,7 @@ Bprep<-function( beta=NULL, R0=NULL, Z=NULL){
       UnCo <- 100 # unit conversion from m to cm.
       
         for (h in 1:length(Z)){
-          B[h]= R0* beta^(UnCo*Z[h])*log(beta, base=exp(1))    
+          B[h]= -R0* beta^(UnCo*Z[h])*log(beta, base=exp(1))    
         }
       
       return(B)

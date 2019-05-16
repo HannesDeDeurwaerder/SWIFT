@@ -52,23 +52,24 @@ The code below defines a simple example of the use of the SWIFT model, based on 
 	tF  <- 60     # Time frequence of measurements per hour [in measurments per h] 
 	t   <- seq(0,24*n,length.out = 24*tF*n)     # Discrete time vector [in h]
 	dZ  <- 0.001    # Thickness of sampled layer [in m]	
-	rho <- 1000     # Density of water [kg m^(-3)]
 	L   <- 1        # maximum soil depth [in m]
 	Z   <- seq(dZ,L,dZ)    # Discrete depth vector centered [in m]
 	kr  <- 10*10^(-10) 	   # root membrane permeability [in s-1] 
 						   # (source: Leuschner et al, 2004)
-	As  <- 1      # Soil surface area covering the roots [in m^2]
-	r   <- 0.0005 # Effective root radius [in m]		
+	
 	DBH <- 0.213  # Diameter at breast height [in m]
 	LA  <- 0.136  # Lumen Fraction, i.e. lumen area/sapwood area [%]
 				  # (derived from Zanne et al, 2010) [table 2, F-value]            
 	Ax  <- LA * ((1.582*((DBH*100)^1.764)) /10^4)    
 				# Total lumen area  of the studied tree [m²],i.e. the lumen area 
                 # fraction multiplied by sapwood area estimated from the DBH 
- 				# (Meinzer et al, 2001)  
-	R0  <- -438688      # Derived from Huang et al, 2017
-	beta<- 0.966        # Derived from Jackson et al., 1996 [table 1, beta-term]
+ 				# (Meinzer et al, 2001) 
+ 	ARtot <- exp(0.88*log(pi*2*(100*DBH/2)^2)-2)  
+        # ARtot in [m^2] via DBH[in cm] (Cermak et al, 2006)
 
+	R0  <- 438688      # Derived from Huang et al, 2017
+  betaCom <- 0.976   # Derived from Jackson et al., 1996 [table 1, beta-term].
+  beta <-  0.976     # Derived from Jackson et al., 1996 [table 1, beta-term].
 		
 	# SOURCE THE SWIFT MODEL
 	#-----------------------
@@ -80,7 +81,7 @@ The code below defines a simple example of the use of the SWIFT model, based on 
 		
 			data(SFday) 	# SF for one day, time frequency: every min, expressed in
 					# [kg h-1]. This data is derived from Huang et al, 2017
-     			uch <- 60*60   	# unit conversion: h to sec
+     			uch <- 60*60*1000   	# unit conversion: h to sec; from kg to m3
 			SF  <- c( rep(SFday,n) )/(uch)		# repetition of SF day over n prefered days
 
 		# b. Soil water potential curve with depth, from Meissner et al, 2012
@@ -109,31 +110,36 @@ The code below defines a simple example of the use of the SWIFT model, based on 
 	# USING THE SWIFT MODEL FUNCTIONS
 	#--------------------------------
 		# a. Root density distribution 
-        	B <- Bprep(beta, R0, Z) 		# output is in [m m^-3]
+        	B <- Bprep(betaCom, R0, Z) 		# output is in [m m^-3]
         
 		# b. The soil-root conductance
         	k <- SoilRootCond(B, kr, PSIs, Z, 'Silt Loam')
+        	
+    # C. The ARi
+          devio=beta^(100*Z)*(1-beta^(100*dZ))
+          ARi=ARtot*devio/sum(devio)
+          
+		# d. Isotopic signature fluctuation at stem base
+        	StemBase <- SWIFT_SB(ARi, D2Hsoil,  k,  PSIs,  SF, t, Z)
         
-		# c. Isotopic signature fluctuation at stem base
-        	StemBase <- SWIFT_SB(As, B, D2Hsoil, dZ, k,  PSIs,  r, rho, SF, t, Z)
-        
-		# d. Isotopic signature at specific height and time
+		# e. Isotopic signature at specific height and time
         	tstud <- seq(2*(24*tF) , 3*(24*tF) ,1)  
 					# Provides the data of day 3 of the modeled tree 
 					# (We selected day 3 to assure proper spin up of the model). 
-        	hom   <- 1.3  	# measured at standard coring height, 1.3 m
+        	hom<- 1.3  	# measured at standard coring height, 1.3 m
         	D2Htree <- SWIFT_H( Ax, StemBase,  hom, SF, tstud, tF)
         
 		# e. The water potential at stem base
-        	PSI0vec <- PSI0calc(As, B, dZ, k,  PSIs, r, rho, t, Z)/CTpsi 	# CTpsi to convert from m to MPa     
+        	PSI0vec <- PSI0calc(ARi,  k,  PSIs,  SF/60, t, Z)/CTpsi 	# CTpsi to convert from m to MPa     
 
 
 
 	# MAKING A SIMPLE PLOT OF THE SWIFT OUTPUT
 	#-----------------------------------------
+  ylabel=expression(paste(delta,""^"2","H"," [","\211",", vsmow]"))
 
-	plot(t,StemBase, xlim= c( min(tstud)/tF, max(tstud)/tF ), type='l', lty=2,
-	 	 col='grey', ylab='d2H (permill, VSMOW)', xlab='timesteps')	
+	plot(t,StemBase, xlim= c( min(tstud)/tF, max(tstud)/tF), type='l', lty=2,
+	 	 col='grey', ylab=ylabel, xlab='timesteps', mgp = c(2, 0.8, 0))	
 		# Plot the signature fluctuations at the stem base
 	
 	lines( tstud/tF, D2Htree, col='blue')	
