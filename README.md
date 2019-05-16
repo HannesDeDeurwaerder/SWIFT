@@ -83,17 +83,17 @@ the example provided in the paper of **De Deurwaerder et al, (In Review)**
         # ARtot in [m^2] via DBH[in cm] (Cermak et al, 2006)
 
 	R0  <- 438688      # Derived from (Huang et al, 2017)
-  betaCom  <- 0.976  # Derived from (Jackson et al, 1996) [table 1, beta-term]
-  beta     <- 0.976  # Derived from (Jackson et al, 1996) [table 1, beta-term]
-
+	betaCom <-0.976    # Derived from (Huang et al, 2017)
+	beta <- 0.976      # Derived from (Huang et al, 2017)
+  
 		
 	# SOURCE THE SWIFT MODEL
 	#-----------------------
   	require(SWIFT)
 
-
-  # PREPARE ADITIONAL DATASETS
+	# PREPARE ADITIONAL DATASETS
 	#---------------------------
+
 		# a. Diurnal sapflow pattern
 		
 			data(SFday) 	
