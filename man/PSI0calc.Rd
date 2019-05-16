@@ -8,32 +8,33 @@ timestep [in m H2O]}
 \usage{ PSI0calc(ARi = NULL, k = NULL, PSIs = NULL, SF=NULL, 
 t = NULL, Z = NULL)}
 \arguments{
-\item{ARi}{
-Description: the fine root surface area distributed in soil layer i [in m2];  
-Structure: A vector of values with length number of soil layers, 
-representative of the studied plant}
-\item{k}{ 
-Description: Plant specific total soil-to-root conductance at each specific 
-soil layer [in s-1];  
-Structure: A vector - results from the function SoilRootCond - and has n 
-elements corresponding to the number of soil layers}
-\item{PSIs}{
-Description: Soil water potential at the each specific soil layer [in m]; Structure: A vector of n element, where n corresponds to the number of soil 
-layers;  
-Note: The water potentials per soil layer is currently considered static in 
-time}
-\item{SF}{ 	
-Description: Instantaneous sap flow over time [in m3 s-1];  
-Structure: A vector of n elements, where n corresponds to the number of timesteps}
-\item{t}{ 
-Description: Cumulative time steps [in s];  
-Structure: A vector}
-\item{Z}{ 
-Description: A vector of Soil depth [in m];  
-Structure: A discrete vector  of n elements, where n corresponds to the 
-number of soil layers}
+  \item{ARi}{
+  Description: the fine root surface area distributed in soil layer i [in m2];  
+  Structure: A vector of values with length number of soil layers, 
+  representative of the studied plant}
+  \item{k}{ 
+  Description: Plant specific total soil-to-root conductance at each specific 
+  soil layer [in s-1];  
+  Structure: A vector - results from the function SoilRootCond - and has n 
+  elements corresponding to the number of soil layers}
+  \item{PSIs}{
+  Description: Soil water potential at the each specific soil layer [in m]; 
+  Structure: A vector of n element, where n corresponds to the number of soil 
+  layers;  
+  Note: The water potentials per soil layer is currently considered static in 
+  time}
+  \item{SF}{ 	
+  Description: Instantaneous sap flow over time [in m3 s-1];  
+  Structure: A vector of n elements, where n corresponds to the number of 
+  timesteps}
+  \item{t}{ 
+  Description: Cumulative time steps [in s];  
+  Structure: A vector}
+  \item{Z}{ 
+  Description: A vector of Soil depth [in m];  
+  Structure: A discrete vector  of n elements, where n corresponds to the 
+  number of soil layers}
 }
-
 \details{}
 \value{ A vector of water potential at stem base for every timestep [in m H2O]}
 \references{}

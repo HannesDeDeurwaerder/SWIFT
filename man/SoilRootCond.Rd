@@ -8,28 +8,28 @@ soil layer [in s-1], while considering the soiltype}
 \usage{ SoilRootCond(B = NULL, kr = NULL, PSIs = NULL, Z = NULL, 
 Soiltype = NULL)}
 \arguments{
-\item{B}{
-Description: Root length density at every discrete soil layer - Results from 
-the function Bprep - [in m m-3]; 
-Structure: A discrete vector of n elements, with n the number of soil layers} 
-\item{kr}{
-Description: The root membrane permeability [s-1]; 
-Structure: One value, representative of the studied plant}
-\item{PSIs}{
-Description: Soil water potential at the each specific soil layer [in m];  
-Structure: A vector of n element, where n corresponds to the number of soil 
-layers;  
-Note: The water potentials per soil layer is currently considered static in 
-time}
-\item{Z}{
-Description: A vector of Soil depth [in m];  
-Structure: A discrete vector of n elements, where n corresponds to the number 
-of soil layers}
-\item{Soiltype}{  
-Description: Soil Tecture class studied (Sand; Loamy Sand; Sandy Loam; 
-Silt Loam; Loam; Sandy Clay Loam; Silty Clay Loam; Clay Loam;Sandy Clay; 
-Silty Clay; Clay); 
-Structure: A Character string}
+  \item{B}{
+  Description: Root length density at every discrete soil layer - Results from 
+  the function Bprep - [in m m-3]; 
+  Structure: A discrete vector of n elements, with n the number of soil layers} 
+  \item{kr}{
+  Description: The root membrane permeability [s-1]; 
+  Structure: One value, representative of the studied plant}
+  \item{PSIs}{
+  Description: Soil water potential at the each specific soil layer [in m];  
+  Structure: A vector of n element, where n corresponds to the number of soil 
+  layers;  
+  Note: The water potentials per soil layer is currently considered static in 
+  time}
+  \item{Z}{
+  Description: A vector of Soil depth [in m];  
+  Structure: A discrete vector of n elements, where n corresponds to the number 
+  of soil layers}
+  \item{Soiltype}{  
+  Description: Soil Tecture class studied (Sand; Loamy Sand; Sandy Loam; 
+  Silt Loam; Loam; Sandy Clay Loam; Silty Clay Loam; Clay Loam;Sandy Clay; 
+  Silty Clay; Clay); 
+  Structure: A Character string}
 }
 \details{}
 \value{	
