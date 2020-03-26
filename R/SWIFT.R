@@ -227,36 +227,35 @@ SWIFT_SB<-function(ARi=NULL, D2Hsoil=NULL, k=NULL, PSIs=NULL,  SF=NULL,  t=NULL,
       D2Hxylem=rep(NA,length(t))    
       D2Hvec <- fi <- RWU <- rep(NA,length(Z))        
       
-    
-      for (a in 1:length(t)){
-        # Water potential at stem base
-        PSI0 <- (sum(k*ARi*(PSIs-Z)) - SF[a])/ sum(k*ARi)
-        RWU0 <- k*ARi*(PSIs-Z - PSI0)
+      for (a in 2:length(t)){
+        # first value is NA due to model spin-up.
         
-        # make sure no negative RWU flows occurs
-        use <- which(RWU0<0)
-        RWU <- RWU0
-        
-        while (sum(use)>0){
-          index <- which(RWU == min(RWU))
-          RWU[index] <- 0
-          use <- which(RWU>0)
-          PSI0 <- (sum(k[use]*ARi[use]*(PSIs[use]-Z[use])) - SF[a]) / sum(k[use]*ARi[use])
-          RWU[use] <- k[use]*ARi[use]*(PSIs[use]-Z[use] - PSI0)
-          use <- which(RWU<0)
-        }
-
-        # systematically assigning isotopic values  
-        if(a==1){D2Hxylem[a]<-NA}     # first value is NA due to model spin-up.
-        if((SF[a]==0 & a!=1) | (is.nan(SF[a]) & a!=1) ){
-          D2Hxylem[a]<-D2Hxylem[a-1] 
+        if((SF[a]==0 & a!=1) | (is.na(SF[a]))){
+          D2Hxylem[a]<-ifelse(is.na(D2Hxylem[a-1]),NA,D2Hxylem[a-1]) 
           # When SF=0, water is stagnant --> signature at t=0 equals signature 
           # at t=-1.
         }else{
+          
+            # Water potential at stem base
+            PSI0 <- (sum(k*ARi*(PSIs-Z)) - SF[a])/ sum(k*ARi)
+            RWU0 <- k*ARi*(PSIs-Z - PSI0)
+            
+            # make sure no negative RWU flows occurs
+            use <- which(RWU0<0)
+            RWU <- RWU0
+            
+            while (sum(use)>0){
+              index <- which(RWU == min(RWU))
+              RWU[index] <- 0
+              use <- which(RWU>0)
+              PSI0 <- (sum(k[use]*ARi[use]*(PSIs[use]-Z[use])) - SF[a]) / sum(k[use]*ARi[use])
+              RWU[use] <- k[use]*ARi[use]*(PSIs[use]-Z[use] - PSI0)
+              use <- which(RWU<0)
+            }
+            
           fi <- RWU/sum(RWU, na.rm=TRUE)
           D2Hxylem[a] <- sum(fi*D2Hsoil, na.rm=TRUE)
         }    
-        
       }
       return(D2Hxylem)
 }
@@ -406,9 +405,30 @@ PSI0calc <- function(ARi=NULL, k=NULL,  PSIs=NULL, SF=NULL, t=NULL, Z=NULL){
 
       PSI0vec=rep(NA,length(t))
         for (a in 1:length(t)){
-          PSI0vec[a]<-(sum(k*ARi*(PSIs-Z)) - SF[a])/ sum(k*ARi)
+         
+          # Water potential at stem base
+          PSI0 <- (sum(k*ARi*(PSIs-Z)) - SF[a])/ sum(k*ARi)
+          RWU0 <- k*ARi*(PSIs-Z - PSI0)
+          
+          # make sure no negative RWU flows occurs
+          use <- which(RWU0<0)
+          RWU <- RWU0
+      
+            while (sum(use)>0){
+              index <- which(RWU == min(RWU))
+              RWU[index] <- 0
+              use <- which(RWU>0)
+              PSI0 <- (sum(k[use]*ARi[use]*(PSIs[use]-Z[use])) - SF[a]) / sum(k[use]*ARi[use])
+              RWU[use] <- k[use]*ARi[use]*(PSIs[use]-Z[use] - PSI0)
+              use <- which(RWU<0)
+            }
+          
+          # assign PSI0 of one time point to the vector of PSI at stem base
+          PSI0vec[a] <- PSI0
         }
-        return(PSI0vec)
+      
+      
+      return(PSI0vec)
 }
 
 
