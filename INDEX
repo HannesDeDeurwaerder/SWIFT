@@ -8,5 +8,4 @@ SoilRootCond: Creates a vector of soil to root conductivity for every defined
 PSI0calc:     Creates a vector of water potential at stem base for every 
               timestep [in m H2O]
 Bprep:        Creates a vector of root length distribution for every defined 
-              soil layer [in m m-3]
-              
+              soil layer [in m m-3]              
