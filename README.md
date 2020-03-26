@@ -63,7 +63,7 @@ the example provided in the paper of **De Deurwaerder et al, (In Review)**
 
 	# PARAMETERS INITIALISATION
 	#--------------------------
-	n   <- 20  # Multiple number of days studied, needed for	spin up of the model
+	n   <- 5  # Multiple number of days studied, needed for	spin up of the model
 	tF  <- 60  # Time frequence of measurements per hour [in measurments per h] 
 	t   <- seq(0,24*n,length.out = 24*tF*n)     # Discrete time vector [in h]
 	dZ  <- 0.001    # Thickness of sampled layer [in m]	
