@@ -224,14 +224,14 @@ SWIFT_SB<-function(ARi=NULL, D2Hsoil=NULL, k=NULL, PSIs=NULL,  SF=NULL,  t=NULL,
   # stem base at every timestep.
     
       # Declare empty vectors
-      D2Hxylem=rep(NA,length(t))    
-      D2Hvec <- fi <- RWU <- rep(NA,length(Z))        
+      D2Hxylem=rep(NaN,length(t))    
+      D2Hvec <- fi <- RWU <- rep(NaN,length(Z))        
       
       for (a in 2:length(t)){
-        # first value is NA due to model spin-up.
+        # first value is NaN due to model spin-up.
         
-        if((SF[a]==0 & a!=1) | (is.na(SF[a]))){
-          D2Hxylem[a]<-ifelse(is.na(D2Hxylem[a-1]),NA,D2Hxylem[a-1]) 
+        if((SF[a]==0 & a!=1) | (is.nan(SF[a]))){
+          D2Hxylem[a]<-ifelse(is.nan(D2Hxylem[a-1]),NaN,D2Hxylem[a-1]) 
           # When SF=0, water is stagnant --> signature at t=0 equals signature 
           # at t=-1.
         }else{
