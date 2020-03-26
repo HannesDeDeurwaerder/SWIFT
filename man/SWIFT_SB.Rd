@@ -86,4 +86,5 @@ function (ARi = NULL, D2Hsoil = NULL, k = NULL, PSIs = NULL, SF = NULL, t = NULL
         }    
       }
       return(D2Hxylem)
+  }
 }
