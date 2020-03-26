@@ -45,28 +45,27 @@ Felicien Meunier and Hans Verbeeck}
 \seealso{}
 \examples{
 ## The function is currently defined as
-		function (ARi = NULL,  k = NULL, PSIs = NULL, SF = NULL, t = NULL, Z = NUL){
-    		   PSI0vec=rep(NA,length(t))
+		  function (ARi = NULL,  k = NULL, PSIs = NULL, SF = NULL, 
+		  t = NULL, Z = NUL){
+    	  PSI0vec=rep(NA,length(t))
         for (a in 1:length(t)){
-         
           # Water potential at stem base
           PSI0 <- (sum(k*ARi*(PSIs-Z)) - SF[a])/ sum(k*ARi)
           RWU0 <- k*ARi*(PSIs-Z - PSI0)
-          
           # make sure no negative RWU flows occurs
           use <- which(RWU0<0)
           RWU <- RWU0
-      
-            while (sum(use)>0){
+          while (sum(use)>0){
               index <- which(RWU == min(RWU))
               RWU[index] <- 0
               use <- which(RWU>0)
-              PSI0 <- (sum(k[use]*ARi[use]*(PSIs[use]-Z[use])) - SF[a]) / sum(k[use]*ARi[use])
+              PSI0 <- (sum(k[use]*ARi[use]*(PSIs[use]-Z[use])) 
+                        - SF[a]) / sum(k[use]*ARi[use])
               RWU[use] <- k[use]*ARi[use]*(PSIs[use]-Z[use] - PSI0)
               use <- which(RWU<0)
-            }
-          
-          # assign PSI0 of one time point to the vector of PSI at stem base
+          }
+          # assign PSI0 of one time point to the vector of PSI 
+          # at stem base
           PSI0vec[a] <- PSI0
         }
       return(PSI0vec)
