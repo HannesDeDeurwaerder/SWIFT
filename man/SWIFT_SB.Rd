@@ -52,8 +52,7 @@ Felicien Meunier and Hans Verbeeck}
 ## The function is currently defined as
 		function (ARi = NULL, D2Hsoil = NULL, k = NULL, 
 		PSIs = NULL, SF = NULL, t = NULL, Z = NULL){
-
-            # Declare empty vectors
+      # Declare empty vectors
       D2Hxylem=rep(NaN,length(t))    
       D2Hvec <- fi <- RWU <- rep(NaN,length(Z))        
       
@@ -61,28 +60,26 @@ Felicien Meunier and Hans Verbeeck}
         # first value is NaN due to model spin-up.
         
         if((SF[a]==0 & a!=1) | (is.nan(SF[a]))){
-          D2Hxylem[a]<-ifelse(is.nan(D2Hxylem[a-1]),NaN,D2Hxylem[a-1]) 
-          # When SF=0, water is stagnant --> signature at t=0 equals signature 
-          # at t=-1.
+              D2Hxylem[a]<-ifelse(is.nan(D2Hxylem[a-1]),
+                            NaN,D2Hxylem[a-1]) 
+          # When SF=0, water is stagnant --> signature at t=0
+          # equals signature at t=-1.
         }else{
-          
             # Water potential at stem base
             PSI0 <- (sum(k*ARi*(PSIs-Z)) - SF[a])/ sum(k*ARi)
             RWU0 <- k*ARi*(PSIs-Z - PSI0)
-            
             # make sure no negative RWU flows occurs
             use <- which(RWU0<0)
             RWU <- RWU0
-            
             while (sum(use)>0){
               index <- which(RWU == min(RWU))
               RWU[index] <- 0
               use <- which(RWU>0)
-              PSI0 <- (sum(k[use]*ARi[use]*(PSIs[use]-Z[use])) - SF[a]) / sum(k[use]*ARi[use])
+              PSI0 <- (sum(k[use]*ARi[use]*(PSIs[use]-Z[use])) 
+                        - SF[a]) / sum(k[use]*ARi[use])
               RWU[use] <- k[use]*ARi[use]*(PSIs[use]-Z[use] - PSI0)
               use <- which(RWU<0)
             }
-            
           fi <- RWU/sum(RWU, na.rm=TRUE)
           D2Hxylem[a] <- sum(fi*D2Hsoil, na.rm=TRUE)
         }    
