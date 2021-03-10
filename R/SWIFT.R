@@ -241,16 +241,22 @@ SWIFT_SB<-function(ARi=NULL, D2Hsoil=NULL, k=NULL, PSIs=NULL,  SF=NULL,  t=NULL,
             RWU0 <- k*ARi*(PSIs-Z - PSI0)
             
             # make sure no negative RWU flows occurs
-            use <- which(RWU0<0)
+            not.use <- which(RWU0<0)
             RWU <- RWU0
             
-            while (sum(use)>0){
-              index <- which(RWU == min(RWU))
-              RWU[index] <- 0
+            while (sum(not.use)>0){
+              not.use <- which(RWU<0)
+              RWU[not.use] <- 0
               use <- which(RWU>0)
-              PSI0 <- (sum(k[use]*ARi[use]*(PSIs[use]-Z[use])) - SF[a]) / sum(k[use]*ARi[use])
-              RWU[use] <- k[use]*ARi[use]*(PSIs[use]-Z[use] - PSI0)
-              use <- which(RWU<0)
+              
+              ARiuse = ARi[use]
+              kuse = k[use]
+              Zuse = Z[use]
+              PSIsuse = PSIs[use]
+              
+              PSI0 <- (sum(kuse*ARiuse*(PSIsuse-Zuse)) - SF[a]) / sum(kuse*ARiuse)
+              RWU[use] <- kuse*ARiuse*(PSIsuse-Zuse - PSI0)
+              
             }
             
           fi <- RWU/sum(RWU, na.rm=TRUE)
