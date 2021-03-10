@@ -27,7 +27,7 @@ defined soil layer.
 ## Quick start and tutorials
 
 An in depth description of the formula used within the SWIFT model can be found 
-in **De Deurwaerder et al (In Review).** The example provided, in combination 
+in **De Deurwaerder et al. (2020).** The example provided, in combination 
 with the provided comments in the R-script should enable the user to succesfully
 run the model. 
 
