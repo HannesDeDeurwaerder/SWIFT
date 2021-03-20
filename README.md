@@ -30,6 +30,10 @@ An in depth description of the formula used within the SWIFT model can be found
 in **[De Deurwaerder et al (2020)](https://doi.org/10.5194/bg-17-4853-2020]).** 
 The example provided, in combination with the provided comments in the R-script 
 should enable the user to succesfully run the model. 
+=======
+in **[De Deurwaerder et al (2020)](https://doi.org/10.5194/bg-17-4853-2020])** 
+The example provided, in combination with the provided comments in the R-script 
+should enable the user to successfully run the model. 
 
 
 ## Installation
