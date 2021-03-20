@@ -27,9 +27,9 @@ defined soil layer.
 ## Quick start and tutorials
 
 An in depth description of the formula used within the SWIFT model can be found 
-in **De Deurwaerder et al (In Review).** The example provided, in combination 
-with the provided comments in the R-script should enable the user to succesfully
-run the model. 
+in **[De Deurwaerder et al (2020)](https://doi.org/10.5194/bg-17-4853-2020]).** 
+The example provided, in combination with the provided comments in the R-script 
+should enable the user to succesfully run the model. 
 
 
 ## Installation
@@ -55,8 +55,8 @@ SWIFT has no other dependencies other than the base R installation.
 ## Examples
 
 The code below defines a simple example of the use of the SWIFT model, based on
-the example provided in the paper of **De Deurwaerder et al, (In Review)** 
-<Link will be added upon acceptance>
+the example provided in the paper of 
+**[De Deurwaerder et al (2020)](https://doi.org/10.5194/bg-17-4853-2020])** 
 
 
 ### Run the SWIFT model
@@ -134,7 +134,7 @@ the example provided in the paper of **De Deurwaerder et al, (In Review)**
 		# b. The soil-root conductance
         	k <- SoilRootCond(B, kr, PSIs, Z, 'Silt Loam')
         	
-    # C. The ARi
+    # c. The ARi
           devio=beta^(100*Z)*(1-beta^(100*dZ))
           ARi=ARtot*devio/sum(devio)
           
